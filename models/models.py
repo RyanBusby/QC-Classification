@@ -16,6 +16,14 @@ for n in xrange(1, 20):
 
 data_dict['df15'].fillna(data_dict['df15'].L3_S30_F3499.mean(), inplace=True)
 
+col_dict = {}
+
+for name, dataframe in data_dict.iteritems():
+    col_dict[name] = dataframe.drop('Response', axis=1).columns.tolist()
+
+with open('../data/col_dict.pkl', 'wb') as f:
+    pickle.dump(col_dict, f)
+
 info_dict = {
             'df10': ('If', 7),
             'df5': ('If', 6),
