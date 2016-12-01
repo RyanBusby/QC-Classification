@@ -11,11 +11,7 @@ The data used to do this came from Bosch which is available [here](https://www.k
 
 Only the numeric dataset was used in this project. That dataset is extremely sparse, 81% of it is null. In order to deal with this, the data was clustered based on the type of measurements each part received.
 
-From each cluster, principal component analysis was preformed (singular value decomposition). As the number of components was iterated through, isolation forest, one class svm, and a decision tree was fit to the data and scored using Matthew's Correlation Coefficient with cross-validation. For each cluster, the combination of number of components and model type with the highest MCC is the chosen model for that cluster.
-
-Given a new data point (part with a set of measurements), put it in the appropriate cluster and predict if it will pass or fail using the respective model.
-
-### how to cluster the sparse data
+### clustering the sparse data
 1. Record which row index is not null for every column.
 
 2. Iterate through every column pair, and record how many non null rows they share.
@@ -34,3 +30,9 @@ Given a new data point (part with a set of measurements), put it in the appropri
 9. For each row, determine which cluster it has the most non null entries in, and drop that row from every other cluster.
 
 10. Fill any remaining null values for each cluster.
+
+From each cluster, principal component analysis was preformed (singular value decomposition). As the number of components was iterated through, isolation forest, one class svm, and a decision tree was fit to the data and scored using Matthew's Correlation Coefficient with cross-validation. For each cluster, the combination of number of components and model type with the highest MCC is the chosen model for that cluster.
+
+The models are saved in models/models, the matrix decomposition models are saved in models/pca
+
+run.py file will prompt a user to enter measurements, and from there the data point will be decomposed into principal components and then the appropriate model predicts pass or fail.
