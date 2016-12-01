@@ -34,6 +34,8 @@ Only the numeric dataset was used in this project. That dataset is extremely spa
 
 ![](images/cluster-animation.gif)
 
+### PCA and Modeling
+
 From each cluster, principal component analysis was preformed (singular value decomposition). As the number of components was iterated through, isolation forest, one class svm, and a decision tree was fit to the data and scored using Matthew's Correlation Coefficient with cross-validation. For each cluster, the combination of number of components and model type with the highest MCC is the chosen model for that cluster.
 
 The models are saved in models/models, the matrix decomposition models are saved in models/pca
