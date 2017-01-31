@@ -19,12 +19,11 @@ for x in xrange(df.shape[1]):
 #
 # for a in xrange(mat.shape[0]): #this takes a long time to execute
 #     for b in xrange(a+1, mat.shape[0]):
-#         print a,b
 #         mat[a,b] = len(ri[a].intersection(ri[b]))
 #
 # np.save('data/similair_columns.npy', mat)
 
-mat = np.load('data/similair_columns.npy')
+mat = np.load('numpy/similair_columns.npy')
 
 #locate indices of highest scored column pairs and group them together
 keys = set(range(df.shape[1]))

@@ -9,7 +9,7 @@ This can be useful in any manufacturing setting, so that the quality control pha
 
 The data used to do this came from Bosch which is available [here](https://www.kaggle.com/c/bosch-production-line-performance/data).
 
-Only the numeric dataset was used in this project. That dataset is extremely sparse, 81% of it is null. In order to deal with this, the data was clustered based on the type of measurements each part received.
+Only the numeric dataset was used in this project. That dataset is extremely sparse, 81% of it is null. In order to deal with this, the data was clustered based on the type of measurements each part received. Below is a explanation of how this is done, the code for this is in slice.py.
 
 ### clustering the sparse data
 
