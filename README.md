@@ -3,7 +3,7 @@
 
 ## Overview
 
-The goal of this project is to predict if a part coming off of a production line will pass or fail quality control based on a set of measurements the part undergoes throughout its life on a the production line.
+The goal of this project is to predict if a part coming off of a production line will pass or fail quality control based on a set of measurements the part undergoes throughout its life on the production line.
 
 This can be useful in any manufacturing setting, so that the quality control phase can be skipped, saving time and energy.
 
