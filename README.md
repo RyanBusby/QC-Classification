@@ -40,4 +40,6 @@ From each cluster, principal component analysis was preformed (singular value de
 
 The models are saved in models/models, the matrix decomposition models are saved in models/pca
 
+Download the [data](https://www.kaggle.com/c/bosch-production-line-performance/data) and save 'train_numeric.csv' in 'data/'. Then run slice.py and the clusters will populate in 'data/data/'.
+
 run.py file will prompt a user to enter measurements, and from there the data point will be decomposed into principal components and then the appropriate model predicts pass or fail.
