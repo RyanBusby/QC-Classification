@@ -1,7 +1,7 @@
 # __Binary Classification__
 
 
-[<img src="img/logo.png" style="width: 200px;"/>](https://www.kaggle.com/c/bosch-production-line-performance/data) ← __the data__
+[<img src="img/logo.png" style="width: 50px;"/>](https://www.kaggle.com/c/bosch-production-line-performance/data) ← __the data__
 
 #### The goal is to predict which parts will fail quality control to reduce manufacturing failures.
 
