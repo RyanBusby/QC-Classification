@@ -9,7 +9,6 @@
 
 - They are very sparse: *81% empty.* The classes are highly imbalanced: *0.58% failed.*
 
-__My approach:__
 1. [Cluster based on shared features](clustering.ipynb)
 2. [Perform principal component analysis on each cluster](PCA.ipynb)
 3. [Use various classification algorithms on each cluster](training.ipynb)
