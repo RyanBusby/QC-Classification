@@ -146,14 +146,11 @@ def make_dfs(clusters, df):
     col_counts = {key:[] for key in df.index.values}
     for cluster in clusters:
         dfx = 'df{}'.format(clusters.index(cluster)+1)
-        print(dfx)
         col_idx = list(cluster)
         dataframe = df.iloc[:,col_idx]
-        print(dfx + ' created')
         dataframe.dropna(how='all', inplace=True)
-        print(dfx + ' nulls dropped')
         dataframe.fillna(0, inplace=True)
-        print(dfx + ' nulls filled')
+        logger.info('{} stored'.format(dfx))
         data_dict[dfx] = dataframe
         temp = np.zeros(dataframe.shape[0])
         temp.fill(len(col_idx))
