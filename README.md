@@ -9,6 +9,6 @@
 
 - They are very sparse: *81% empty.* The classes are highly imbalanced: *0.58% failed.*
 
-1. [Cluster based on shared features](clustering.ipynb)
-2. [Perform principal component analysis on each cluster](pca.ipynb)
-3. [Use various classification algorithms on each cluster](training.ipynb)
+1. [Cluster based on shared features](clustering.py)
+2. [Perform principal component analysis on each cluster](pca.py)
+3. [Use various classification algorithms on each cluster](training.py)
