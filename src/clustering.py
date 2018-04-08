@@ -112,7 +112,6 @@ def make_clusters(mat):
     keys = set(range(mat.shape[0]))
     clusters = []
     while len(keys) > 0:
-        print(len(clusters), 'cluster(s) generated')
         a = np.where(mat == mat.max())
         a = np.vstack((a[0],a[1])).T
         a.sort()
@@ -197,7 +196,6 @@ def save_dfs(data_dict, cluster_idx, empties, filepath, df, labels):
     '''
     INPUT: dict, dict, set, string
     '''
-    counter = 0
     dfx = df.loc[list(empties)]
     dfx['Response'] = labels
     dfx.to_csv(filepath.format(counter))
@@ -205,5 +203,4 @@ def save_dfs(data_dict, cluster_idx, empties, filepath, df, labels):
         final = df_.loc[cluster_idx[name]]
         if len(final)>0:
             final['Response'] = labels
-            counter += 1
             final.to_csv(filepath.format(counter)+'.csv')
