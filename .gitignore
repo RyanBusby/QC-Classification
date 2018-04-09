@@ -1,0 +1,6 @@
+data/*
+ipynb
+src/__pycache__
+__pycache__
+.ipynb_checkpoints
+#!data/similair_columns.npy

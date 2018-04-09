@@ -87,6 +87,7 @@ def make_predictions(assignments, col_idx, DF, modelchoices, pca_map, models, lo
         n+=1
         if not assigned:
             preds.append({'Id':idx,'Response':0})
+            continue
         cols = list(col_idx[assigned])
         X = DF.loc[idx, cols].fillna(0).values
         n = X.shape[0]
