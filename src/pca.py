@@ -67,7 +67,7 @@ def transform_clusters(dfs, X, logger):
         model = PCA(svd_solver='full', random_state=11).fit(X[df])
         k = choose_k(model.singular_values_)
         pca_map[df] = PCA(n_components=k, random_state=11)
-        logger.info('fitting cluster with {} components'.format(k))
+        logger.info('fitting cluster {}x{} with {} components'.format(k, X[df].shape[0], X[df].shape[1]))
         Z[df] = pca_map[df].fit_transform(X[df])
     return Z, pca_map
 

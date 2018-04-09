@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import pickle
+import json
 from glob import glob
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
@@ -20,25 +21,36 @@ def run(logger):
     final = {}
     hi_scores = {df:0.0 for df in dfs}
     for df in dfs:
-        print(df)
         for d in result:
             dfx = list(d.keys())[0]
             if  dfx == df and d[dfx]['score'] > hi_scores[dfx]:
                 hi_scores[dfx] = d[dfx]['score']
                 final[dfx] = d[dfx]
-    logger.info('SAVING MODELS')
-    for name, d in final.items():
-        with open(os.path.join('..','data','models', d['munge'], name), 'wb') as f:
-            pickle.dump(models[d['munge']][d['classifier']], f)
-    modelchoicef = os.path.join('..','data','models','modelchoices')
+    modelchoicef = os.path.join('..','data','models','modelchoices.json')
+    modchoice = {}
+    logger.info('OVERWRTING models with lower matthews_corrcoef')
     if os.path.isfile(modelchoicef):
         with open(modelchoicef, 'rb') as f:
             old_final = json.load(f)
         for name, d in final.items():
-            old_final[name] = d
-        final = old_final
-    with open(modelchoicef, 'wb') as f:
-        json.dump(final, f)
+            if name not in old_final:
+                modchoice[name] = d
+                with open(os.path.join('..','data','models', d['munge'], name), 'wb') as f:
+                    pickle.dump(models[d['munge']][d['classifier']], f)
+            elif d['score'] > old_final[name]['score']:
+                modchoice[name] = d
+                os.remove(os.path.join('..','data','models', old_final[name]['munge'], name))
+                with open(os.path.join('..','data','models', d['munge'], name), 'wb') as f:
+                    pickle.dump(models[d['munge']][d['classifier']], f)
+            else:
+                modchoice[name] = old_final[name]
+    else:
+        for name, d in final.items():
+            modchoice[name] = d
+            with open(os.path.join('..','data','models', d['munge'], name), 'wb') as f:
+                pickle.dump(models[d['munge']][d['classifier']], f)
+    with open(modelchoicef, 'w') as f:
+        json.dump(modchoice, f)
 
 def get_result(munges, logger):
     '''
@@ -49,7 +61,7 @@ def get_result(munges, logger):
     result = []
     models = {}
     for munge in munges:
-        logger.info(munge)
+        logger.info('START TRAINING - '+munge)
         logger.info('STARTING - make_data_dict()')
         data, dfs = make_data_dict(munge)
         class_weights = get_class_weights(data, dfs)
@@ -76,7 +88,7 @@ def make_data_dict(file):
     fnames = glob(os.path.join('..','data',file,'*.csv'))
     data = {name.split('/')[-1][:-4]: pd.read_csv(name, index_col='Id') for name in fnames}
     #some of the clusters don't have any failuers, can't model without both classes
-    dfs = [d for d in data.keys() if data[d]['Response'].sum()>1]
+    dfs = [d for d in data.keys() if data[d]['Response'].sum()>2]
     return data, dfs
 
 def get_class_weights(data, dfs):
@@ -98,16 +110,16 @@ def split_training(data, dfs):
 
 def train_classifiers(dfs, class_weights, X_trains, X_tests, y_trains, y_tests, munge, logger):
     logger.info('TRAINING LogisticRegression on {} clusters'.format(len(dfs)))
-    lrs = {df: LogisticRegression(fit_intercept=True).fit(X_trains[df], y_trains[df]) for df in dfs}
+    lrs = {df: LogisticRegression(fit_intercept=True, random_state=11).fit(X_trains[df], y_trains[df]) for df in dfs}
     logger.info('TRAINING RandomForestClassifier on {} clusters'.format(len(dfs)))
     rfs = {df: RandomForestClassifier(max_features='sqrt',\
                                       class_weight={0:1-class_weights[df],\
-                                      1:class_weights[df]}).fit(X_trains[df], y_trains[df])\
+                                      1:class_weights[df]}, random_state=11).fit(X_trains[df], y_trains[df])\
                                       for df in dfs}
     logger.info('TRAINING DecisionTreeClassifier on {} clusters'.format(len(dfs)))
     dts = {df: DecisionTreeClassifier(max_features='sqrt',\
                                       class_weight={0:1-class_weights[df],\
-                                      1:class_weights[df]}).fit(X_trains[df], y_trains[df])\
+                                      1:class_weights[df]}, random_state=11).fit(X_trains[df], y_trains[df])\
                                       for df in dfs}
 
     classifiers = {munge:{'lrs': lrs, 'rfs': rfs, 'dts': dts}}

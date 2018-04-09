@@ -9,6 +9,6 @@
 
 - They are very sparse: *81% empty.* The classes are highly imbalanced: *0.58% failed.*
 
-1. [Cluster based on shared features](src/clustering.py)
-2. [Perform principal component analysis on each cluster](src/pca.py)
-3. [Use various classification algorithms on each cluster](src/training.py)
+[Cluster based on shared features](src/clustering.py)
+[Perform principal component analysis on each cluster](src/pca.py)
+[Use various classification algorithms on each cluster](src/training.py)

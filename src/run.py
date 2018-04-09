@@ -8,8 +8,9 @@ import random
 random.seed(11)
 
 '''
-download data, cluster, munge, train
+load data, cluster, decompose, train
 '''
+
 def make_dirs():
     a = os.path.join('..','data', 'clusters')
     b = os.path.join('..','data', 'models', 'clusters')
@@ -39,7 +40,6 @@ stream_handler.setFormatter(stream_formatter)
 logger.addHandler(file_handler)
 logger.addHandler(stream_handler)
 
-make_dirs()
 logger.info('STARTING - clustering.py')
 run1(logger)
 logger.info('STARTING - pca.py')
