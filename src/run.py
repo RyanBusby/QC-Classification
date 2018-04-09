@@ -1,6 +1,7 @@
 from clustering import run as run1
 from pca import run as run2
 from training import run as run3
+from precit import run as run4
 import os
 import logging
 from datetime import datetime
@@ -40,9 +41,11 @@ stream_handler.setFormatter(stream_formatter)
 logger.addHandler(file_handler)
 logger.addHandler(stream_handler)
 
-# logger.info('STARTING - clustering.py')
-# run1(logger)
-# logger.info('STARTING - pca.py')
-# run2(logger)
+logger.info('STARTING - clustering.py')
+run1(logger)
+logger.info('STARTING - pca.py')
+run2(logger)
 logger.info('STARTING - training.py')
 run3(logger)
+logger.info('STARTING - predict.py')
+run4(logger)
