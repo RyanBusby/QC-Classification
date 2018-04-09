@@ -1,7 +1,7 @@
 from clustering import run as run1
 from pca import run as run2
 from training import run as run3
-from precit import run as run4
+from predict import run as run4
 import os
 import logging
 from datetime import datetime
