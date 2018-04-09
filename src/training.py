@@ -36,19 +36,19 @@ def run(logger):
             if name not in old_final:
                 modchoice[name] = d
                 with open(os.path.join('..','data','models', d['munge'], name), 'wb') as f:
-                    pickle.dump(models[d['munge']][d['classifier']], f)
+                    pickle.dump(models[d['munge']][d['classifier']][name], f)
             elif d['score'] > old_final[name]['score']:
                 modchoice[name] = d
                 os.remove(os.path.join('..','data','models', old_final[name]['munge'], name))
                 with open(os.path.join('..','data','models', d['munge'], name), 'wb') as f:
-                    pickle.dump(models[d['munge']][d['classifier']], f)
+                    pickle.dump(models[d['munge']][d['classifier']][name], f)
             else:
                 modchoice[name] = old_final[name]
     else:
         for name, d in final.items():
             modchoice[name] = d
             with open(os.path.join('..','data','models', d['munge'], name), 'wb') as f:
-                pickle.dump(models[d['munge']][d['classifier']], f)
+                pickle.dump(models[d['munge']][d['classifier']][name], f)
     with open(modelchoicef, 'w') as f:
         json.dump(modchoice, f)
 
@@ -68,7 +68,7 @@ def get_result(munges, logger):
         X_trains, X_tests, y_trains, y_tests = split_training(data, dfs)
         logger.info('STARTING - train_classifiers()')
         classifiers = train_classifiers(dfs, class_weights, X_trains, X_tests, y_trains, y_tests, munge, logger)
-        models[list(classifiers.keys())[0]] = classifiers[munge]
+        models[munge] = classifiers[munge]
         logger.info('STARTING - make_preds()')
         d_preds = make_preds(dfs, classifiers[munge], X_tests)
         logger.info('STARTING - score()')
@@ -149,3 +149,6 @@ def choose_classifier(d_scores, dfs):
                 choice = name
         d_choice[df] = choice
     return d_choice
+
+if __name__ == '__main__':
+    result, dfs, models = get_result(['clusters', 'pca'], logger)
