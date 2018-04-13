@@ -8,7 +8,7 @@ from sklearn.decomposition import PCA
 
 """
 perform SVD on each cluster and save as seperate cluster
-in choose_k, last karg is set to .95, that means 95%
+in choose_k, last kwarg is set to .95, that means 95%
 of the variance of each cluster is being explained by k components,
 95% was chosen for conventionality, but might be worth tweaking and seeing
 if there is any improvement
